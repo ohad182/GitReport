@@ -1,5 +1,5 @@
 # coding=windows-1252
-from core.models import GitData
+from core.models import UserInfo
 
 
 class GitReport(object):
@@ -12,29 +12,28 @@ class GitReport(object):
     level_counter_placeholder = "<!--LevelCounter-->"
 
     def __init__(self, **kwargs):
-        """ @type git_data: GitData"""
-        self.git_data = kwargs.get('git_data', None)
-        self.project_name_extractor = kwargs.get("project_name_extractor", lambda repo: repo.repo_dir)
+        self.user_info: UserInfo = kwargs.get('git_data', None)
 
     def generate(self):
+        """
+        Generates a report based on the user info provided in the constructor
+        :return: str representation of the html report
+        """
         report = self.__page_body
         list_count = 1
-        for repo in self.git_data.repositories:
-            project_name = self.project_name_extractor(repo)
-            project_branch = repo.active_branch
-
+        for project in self.user_info.projects:
             repo_report = self.__project_title.replace(self.project_title_placeholder,
-                                                       "{} --> {}".format(project_name, project_branch.name))
+                                                       "{} --> {}".format(project.name, project.branch))
 
             repo_report = repo_report + self.__project_middle_li.replace(self.middle_li_counter_placeholder,
                                                                          "1").replace(self.middle_li_title_placeholder,
                                                                                       "Achievements:").replace(
                 self.list_counter_placeholder, str(list_count)).replace(self.level_counter_placeholder, "1")
 
-            for item in repo.commit_data.commits:
-                for sub_item in item.message_lines:
+            for commit in project.commits:
+                for commit_item in commit.message_lines:
                     repo_report = repo_report + self.__leaf_content.replace(self.leaf_content_placeholder,
-                                                                            str(sub_item))
+                                                                            str(commit_item))
 
             repo_report = repo_report + self.__project_middle_li.replace(self.middle_li_counter_placeholder,
                                                                          "2").replace(self.middle_li_title_placeholder,
@@ -49,10 +48,6 @@ class GitReport(object):
                 self.list_counter_placeholder, str(list_count)).replace(self.level_counter_placeholder, "1")
 
             repo_report = repo_report + self.__leaf_content.replace(self.leaf_content_placeholder, "  ")
-            # add middle items
-            # add leafs of actions
-
-            # do some shit
 
             report = report.replace(self.page_content_placeholder,
                                     repo_report + self.__project_break + self.page_content_placeholder)

@@ -3,63 +3,54 @@ import common.constants as constants
 from git import Commit
 
 
-class CommitData(object):
-    def __init__(self, commit: Commit):
+class CommitInfo(object):
+    """
+    A model class to describe commit info (relevant to the report)
+    """
+
+    def __init__(self, **kwargs):
+        msg = kwargs.get("commit_message", "")
         self.message_lines = list(
-            filter(lambda m: m != '' and not m.startswith(constants.IGNOREֹֹֹ_MESSAGE), commit.message.splitlines()))
+            filter(lambda m: m != '' and not m.startswith(constants.IGNOREֹֹֹ_MESSAGE), msg.splitlines()))
         self.message = '\n'.join(self.message_lines)
-        self.committed_date = commit.committed_date
+        self.commit_date = kwargs.get("commit_date", None)
+
+    def __eq__(self, other):
+        if isinstance(other, self.__class__):
+            return self.message == other.message and \
+                   self.commit_date == other.commit_date and \
+                   self.message_lines == other.message_lines
+        else:
+            return False
+
+
+class ProjectInfo(object):
+    def __init__(self, **kwargs):
+        self.full_name = kwargs.get("full_name", None)
+        self.name = kwargs.get("name", None)
+        self.total_commits = kwargs.get("total_commits", 0)
+        self.old_commits = kwargs.get("old_commits", 0)
+        self.other_commits = kwargs.get("other_commits", 0)
+        self.my_commits = kwargs.get("my_commits", 0)
+        self.location = kwargs.get("location", None)
+        self.branch = kwargs.get("branch", None)
+        self.commits = kwargs.get("commits", [])
 
     def __str__(self):
-        return "message: {}, date: {}".format(self.message.encode('utf-8'),
-                                              dt.datetime.fromtimestamp(self.committed_date))
+        return "{} - {}".format(self.name, self.branch)
+
+    def append_commit(self, commit: CommitInfo, ignore_duplicates=False):
+        duplicate = False
+        if ignore_duplicates:
+            existing = next((x for x in self.commits if x == commit), None)
+            duplicate = existing is not None
+        if not duplicate:
+            self.commits.append(commit)
 
 
-class Commits(object):
+class UserInfo(object):
     def __init__(self):
-        self.commits = []
+        self.projects = []
 
-    def append(self, other: Commit, remove_duplicates=False):
-        data_to_append = CommitData(other)
-        if remove_duplicates:
-            for commit in self.commits:
-                common = set(data_to_append.message_lines).intersection(commit.message_lines)
-                if len(common) is not 0:
-                    print("need to remove duplicates - not implemented")
-
-        self.commits.append(data_to_append)
-
-    def __str__(self):
-        st = ''
-        for item in self.commits:
-            st += str(item) + '\n'
-
-        return st
-
-
-class RepoStatistics(object):
-    def __init__(self):
-        self.total_commits = 0
-        self.old_commits = 0
-        self.external_commits = 0
-        self.user_commits = 0
-        self.repo_dir = None
-        self.repo_name = None
-        self.active_branch = None
-        self.commit_data = Commits()
-
-    def __str__(self):
-        return "Statistics: dir: {}, branch: {}, total: {}, old: {}, external: {}, yours:{}\n commits: \n{}".format(
-            self.repo_dir, self.active_branch, self.total_commits, self.old_commits, self.external_commits,
-            self.user_commits, self.commit_data)
-
-
-class GitData(object):
-    def __init__(self):
-        self.repositories = []
-
-    def append(self, other: RepoStatistics):
-        self.repositories.append(other)
-
-    def __str__(self):
-        return str(self.repositories)
+    def get_project(self, name):
+        return next((x for x in self.projects if x.name == name), None)
