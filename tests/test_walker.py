@@ -1,16 +1,19 @@
 import os
-from configuration.config import FileSystemConfig
+import pytest
 from core.walker import Walker
 from core.report import GitReport
 from datetime import datetime
+from tests.common_config import fs_config
 
 
-def test_report():
-    config = FileSystemConfig(
-        root_directory="C:\\Git\\", author_name="user name",
-        author_email="user@company.com",
-        remove_duplicates=True
-    )
+@pytest.fixture(scope="module")
+def config():
+    config = fs_config
+    yield config
+    # teardown
+
+
+def test_report(config):
     walker = Walker(config=config)
     git_data = walker.walk()
 
@@ -30,4 +33,5 @@ def test_report():
         os.makedirs(report_dir)
 
     with open(report_path, 'w+') as f:
+        print("writing report at: {}".format(report_path))
         f.write(report_content)

@@ -1,13 +1,16 @@
-from configuration.config import FileSystemConfig
+import pytest
+from tests.common_config import fs_config
 from core.walker import Walker
 
 
-def test_report():
-    config = FileSystemConfig(
-        root_directory="C:\\Git\\", author_name="user name",
-        author_email="user@company.com",
-        remove_duplicates=True
-    )
+@pytest.fixture(scope="module")
+def config():
+    config = fs_config
+    yield config
+    # teardown
+
+
+def test_report(config):
     walker = Walker(config=config)
     git_data = walker.walk()
 
