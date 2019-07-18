@@ -15,6 +15,8 @@ class FileSystemProvider(BaseGitProvider):
         self.ignore_folders = constants.IGNORE_FOLDERS
 
     def walk(self, config: FileSystemConfig) -> UserInfo:
+        print("Fetching information for: {}({})".format(config.author_name, config.author_email))
+
         git_folders = self.get_git_folders(config.root_directory)
         print("Found {} git folders.".format(len(git_folders)))
 
@@ -54,7 +56,7 @@ class FileSystemProvider(BaseGitProvider):
                     else:
                         project_info.other_commits += 1
         except Exception as e:
-            print('Error at {} message: {}'.format(repo_dir, e.message))
+            print('Error at {} message: {}'.format(repo_dir, str(e)))
 
         return project_info
 
@@ -62,13 +64,18 @@ class FileSystemProvider(BaseGitProvider):
         project_name = None
         project_full_name = None
         try:
-            url = repo.remote("origin").config_reader.config._sections[u'remote "origin"'][u'url']
-            project_name_parts = url.split("/")[3:]
-            project_name = project_name_parts[-1]
-            project_full_name = "/".join(project_name_parts)
+            for remote in repo.remotes:
+                remote_section = next((x for x in remote.config_reader.config._sections.keys() if "remote" in x), None)
+                if remote_section is not None:
+                    url = remote.config_reader.config._sections[remote_section][u'url']
+                    project_name_parts = url.split("/")[3:]
+                    project_name = project_name_parts[-1].replace(".git", "")
+                    project_full_name = "/".join(project_name_parts).replace(".git", "")
+                    if project_name is not None and project_full_name is not None:
+                        break
 
         except Exception as e:
-            print(e.message)
+            print(str(e))
         return project_name, project_full_name
 
     def get_git_folders(self, root):
