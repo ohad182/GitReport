@@ -89,10 +89,10 @@ font-family:"Arial",sans-serif;mso-fareast-font-family:Arial'><span
 
     __project_title = """
         <p class=MsoListParagraph style='margin-left:40.5pt;text-indent:-.25in;
-mso-list:l0 level1 lfo16'><![if !supportLists]><span style='font-family:"Courier New";
-mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
+mso-list:l0 level1 lfo16'><![if !supportLists]><span style='font-family:"Arial",sans-serif;
+mso-fareast-font-family:"Arial",sans-serif'><span style='mso-list:Ignore'>o<span
             style='font:7.0pt "Times New Roman"'>&nbsp;&nbsp; </span></span></span><![endif]><span
-            dir=LTR></span><span style='font-size:14.0pt;font-family:"Arial",sans-serif'>{}</span><o:p></o:p></p>
+            dir=LTR></span><span style='font-size:10.0pt;font-family:"Arial",sans-serif'>{}</span><o:p></o:p></p>
     """.format(project_title_placeholder)
 
     __page_body = """
@@ -773,8 +773,8 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             margin: 0in;
             margin-bottom: .0001pt;
             mso-pagination: widow-orphan;
-            font-size: 11.0pt;
-            font-family: "Calibri", sans-serif;
+            font-size: 10.0pt;
+            font-family: "Arial",sans-serif;
             mso-fareast-font-family: Calibri;
             mso-fareast-theme-font: minor-latin;
             mso-bidi-font-family: "Times New Roman";
@@ -806,20 +806,20 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             margin-left: .5in;
             margin-bottom: .0001pt;
             mso-pagination: widow-orphan;
-            font-size: 11.0pt;
-            font-family: "Calibri", sans-serif;
-            mso-fareast-font-family: Calibri;
+            font-size: 10.0pt;
+            font-family: "Arial",sans-serif;
+            mso-fareast-font-family: Arial;
             mso-fareast-theme-font: minor-latin;
-            mso-bidi-font-family: "Times New Roman";
+            mso-bidi-font-family: "Arial";
         }
 
         span.EmailStyle18 {
             mso-style-type: personal;
             mso-style-noshow: yes;
             mso-style-unhide: no;
-            font-family: "Calibri", sans-serif;
-            mso-ascii-font-family: Calibri;
-            mso-hansi-font-family: Calibri;
+            font-family: "Arial", sans-serif;
+            mso-ascii-font-family: Arial;
+            mso-hansi-font-family: Arial;
             color: windowtext;
         }
 
@@ -855,7 +855,7 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-level-tab-stop:none;
             mso-level-number-position:left;
             text-indent:-.25in;
-            font-family:"Courier New";
+            font-family:"Arial";
         }
         @list l0:level2 {
             mso-level-number-format:bullet;
@@ -922,8 +922,8 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-level-number-position: left;
             margin-left: .75in;
             text-indent: -.25in;
-            mso-ansi-font-size: 12.0pt;
-            mso-bidi-font-size: 12.0pt;
+            mso-ansi-font-size: 10.0pt;
+            mso-bidi-font-size: 10.0pt;
             font-family: "Arial", sans-serif;
             mso-ansi-font-weight: normal;
             mso-bidi-font-weight: normal;
@@ -993,8 +993,8 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-level-number-position: left;
             margin-left: .75in;
             text-indent: -.25in;
-            mso-ansi-font-size: 12.0pt;
-            mso-bidi-font-size: 12.0pt;
+            mso-ansi-font-size: 10.0pt;
+            mso-bidi-font-size: 10.0pt;
             font-family: "Arial", sans-serif;
             mso-ansi-font-weight: normal;
             mso-bidi-font-weight: normal;
@@ -1067,7 +1067,7 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-level-number-position: left;
             margin-left: 40.5pt;
             text-indent: -.25in;
-            font-family: "Courier New";
+            font-family: "Arial";
         }
         @list l3:level2 {
             mso-level-number-format: bullet;
@@ -1099,7 +1099,7 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-level-tab-stop: none;
             mso-level-number-position: left;
             text-indent: -.25in;
-            font-family: "Courier New";
+            font-family: "Arial";
         }
         @list l3:level6 {
             mso-level-number-format: bullet;
@@ -1123,7 +1123,7 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-level-tab-stop: none;
             mso-level-number-position: left;
             text-indent: -.25in;
-            font-family: "Courier New";
+            font-family: "Arial";
         }
         @list l3:level9 {
             mso-level-number-format: bullet;
@@ -1143,8 +1143,8 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-level-number-position: left;
             margin-left: .75in;
             text-indent: -.25in;
-            mso-ansi-font-size: 12.0pt;
-            mso-bidi-font-size: 12.0pt;
+            mso-ansi-font-size: 10.0pt;
+            mso-bidi-font-size: 10.0pt;
             font-family: "Arial", sans-serif;
             mso-ansi-font-weight: normal;
             mso-bidi-font-weight: normal;
@@ -1215,8 +1215,8 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-level-number-position: left;
             margin-left: .75in;
             text-indent: -.25in;
-            mso-ansi-font-size: 12.0pt;
-            mso-bidi-font-size: 12.0pt;
+            mso-ansi-font-size: 10.0pt;
+            mso-bidi-font-size: 10.0pt;
             font-family: "Arial", sans-serif;
             mso-ansi-font-weight: normal;
             mso-bidi-font-weight: normal;
@@ -1302,7 +1302,7 @@ mso-fareast-font-family:"Courier New"'><span style='mso-list:Ignore'>o<span
             mso-para-margin-bottom: .0001pt;
             mso-pagination: widow-orphan;
             font-size: 10.0pt;
-            font-family: "Times New Roman", serif;
+            font-family: "Arial",sans-serif;
         }
     </style>
     <![endif]-->

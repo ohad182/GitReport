@@ -1,5 +1,7 @@
 import os
 import datetime as dt
+from configparser import NoOptionError
+
 import common.constants as constants
 from git import Repo
 
@@ -17,8 +19,14 @@ class FileSystemProvider(BaseGitProvider):
     def walk(self, config: FileSystemConfig) -> UserInfo:
         print("Fetching information for: {}({})".format(config.author_name, config.author_email))
 
-        git_folders = self.get_git_folders(config.root_directory)
-        print("Found {} git folders.".format(len(git_folders)))
+        if isinstance(config.root_directory, str):
+            config.root_directory = [config.root_directory]
+
+        git_folders = []
+        for root in config.root_directory:
+            root_folders = self.get_git_folders(root)
+            print("Found {} git folders under '{}'.".format(len(root_folders), root))
+            git_folders.extend(root_folders)
 
         user_info = UserInfo()
         for folder in sorted(git_folders):
@@ -60,19 +68,23 @@ class FileSystemProvider(BaseGitProvider):
 
         return project_info
 
+    def config_reader_get(self, config_reader, key, default=None):
+        try:
+            return config_reader.get(key)
+        except NoOptionError as noe:
+            return default
+
     def get_project_name(self, repo):
         project_name = None
         project_full_name = None
         try:
             for remote in repo.remotes:
-                remote_section = next((x for x in remote.config_reader.config._sections.keys() if "remote" in x), None)
-                if remote_section is not None:
-                    url = remote.config_reader.config._sections[remote_section][u'url']
-                    project_name_parts = url.split("/")[3:]
-                    project_name = project_name_parts[-1].replace(".git", "")
-                    project_full_name = "/".join(project_name_parts).replace(".git", "")
-                    if project_name is not None and project_full_name is not None:
-                        break
+                url = self.config_reader_get(remote.config_reader, "url")
+                project_name_parts = url.split("/")[3:]
+                project_name = project_name_parts[-1].replace(".git", "")
+                project_full_name = "/".join(project_name_parts).replace(".git", "")
+                if project_name is not None and project_full_name is not None:
+                    break
 
         except Exception as e:
             print(str(e))
