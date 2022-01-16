@@ -11,7 +11,7 @@ class CommitInfo(object):
     def __init__(self, **kwargs):
         msg = kwargs.get("commit_message", "")
         self.message_lines = list(
-            filter(lambda m: m != '' and not m.startswith(constants.IGNOREֹֹֹ_MESSAGE), msg.splitlines()))
+            filter(lambda m: m != '' and not m.startswith(constants.IGNORE_MESSAGE), msg.splitlines()))
         self.message = '\n'.join(self.message_lines)
         self.commit_date = kwargs.get("commit_date", None)
 

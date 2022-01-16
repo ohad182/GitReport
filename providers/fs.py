@@ -80,9 +80,15 @@ class FileSystemProvider(BaseGitProvider):
         try:
             for remote in repo.remotes:
                 url = self.config_reader_get(remote.config_reader, "url")
-                project_name_parts = url.split("/")[3:]
-                project_name = project_name_parts[-1].replace(".git", "")
-                project_full_name = "/".join(project_name_parts).replace(".git", "")
+                if url.lower().startswith("git@"):
+                    # this is github url
+                    lower_url = url.lower()
+                    project_full_name = url[lower_url.index(":") + 1:lower_url.index(".git")]
+                    project_name = project_full_name[project_full_name.index("/") + 1:]
+                else:
+                    project_name_parts = url.split("/")[3:]
+                    project_name = project_name_parts[-1].replace(".git", "")
+                    project_full_name = "/".join(project_name_parts).replace(".git", "")
                 if project_name is not None and project_full_name is not None:
                     break
 
